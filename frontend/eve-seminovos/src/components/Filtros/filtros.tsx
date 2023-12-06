@@ -49,10 +49,11 @@ export default function Filtros() {
   ];
   return (
     <List
+      sx={{ width: "20%", bgcolor: "background.paper" }}
       component={"nav"}
       subheader={
         <ListSubheader component={"div"} id="nested-list-subheader">
-          Utilize os filtros para aprimorar a busca
+          Utilize os filtros para busca
         </ListSubheader>
       }
     >
