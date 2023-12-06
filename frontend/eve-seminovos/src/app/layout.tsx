@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Header from "@/components/header/header";
+import { Box, Collapse } from "@mui/material";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import Aside from "@/components/aside/aside";
+import Aside from "@/components/Filtros/filtros";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,9 +20,23 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         {" "}
-        <Header />
-        <Aside />
-        {children}
+        <Box
+          sx={{ display: "flex", flexDirection: "column", marginTop: "10vh" }}
+        >
+          <Header />
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+
+              height: "90vh",
+            }}
+          >
+            <Aside />
+            {children}
+          </Box>
+        </Box>
       </body>
     </html>
   );

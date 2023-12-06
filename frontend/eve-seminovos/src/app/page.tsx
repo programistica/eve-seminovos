@@ -1,5 +1,6 @@
 import * as React from "react";
+import { Box } from "@mui/material";
 
 export default function Home() {
-  return <h1>Home</h1>;
+  return <Box>Home</Box>;
 }
