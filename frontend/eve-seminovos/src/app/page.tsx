@@ -1,44 +1,31 @@
+"use client";
+
 import * as React from "react";
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 
+interface Carro {
+  id: number;
+  nome: string;
+  marca: string;
+  ano: number;
+  preco: number;
+  img: string;
+}
+
+export async function fetchCarros(): Promise<Carro[]> {
+  const response = await fetch("http://127.0.0.1:5000/carros");
+  const data = (await response.json()) as Carro[];
+  return data;
+}
+
 export default function Home() {
-  const carros = [
-    {
-      nome: "Corola",
-      marca: "Toyota",
-      ano: "2021",
-      preco: "R$ 100.000,00",
-      img: "https://picsum.photos/200/300",
-    },
-    {
-      nome: "Civic",
-      marca: "Honda",
-      ano: "2020",
-      preco: "R$ 90.000,00",
-      img: "https://picsum.photos/200/300",
-    },
-    {
-      nome: "HB20",
-      marca: "Hyundai",
-      ano: "2019",
-      preco: "R$ 80.000,00",
-      img: "https://picsum.photos/200/300",
-    },
-    {
-      nome: "Palio",
-      marca: "Fiat",
-      ano: "2018",
-      preco: "R$ 70.000,00",
-      img: "https://picsum.photos/200/300",
-    },
-    {
-      nome: "Gol",
-      marca: "Volkswagen",
-      ano: "2017",
-      preco: "R$ 60.000,00",
-      img: "https://picsum.photos/200/300",
-    },
-  ];
+  const [carros, setCarros] = React.useState<Carro[]>([]);
+
+  React.useEffect(() => {
+    fetchCarros().then((data) => {
+      setCarros(data);
+    });
+  }, []);
 
   return (
     <Box
