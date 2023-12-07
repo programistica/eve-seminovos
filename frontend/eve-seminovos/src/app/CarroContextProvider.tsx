@@ -1,6 +1,4 @@
-"use client";
-
-import React from "react";
+import React, { useState, createContext } from "react";
 
 interface Carro {
   id: number;
@@ -16,13 +14,16 @@ interface Filter {
   ano: number[];
 }
 
-const [filter, setFilter] = React.useState<Filter>();
-const [carros, setCarros] = React.useState<Carro[]>([]);
-export const CarroContext = React.createContext({
-  filter,
-  setFilter,
-  carros,
-  setCarros,
+export const CarroContext = createContext<{
+  filter: Filter | undefined;
+  setFilter: React.Dispatch<React.SetStateAction<Filter | undefined>>;
+  carros: Carro[];
+  setCarros: React.Dispatch<React.SetStateAction<Carro[]>>;
+}>({
+  filter: undefined,
+  setFilter: () => {},
+  carros: [],
+  setCarros: () => {},
 });
 
 export default function CarroContextProvider({
@@ -30,6 +31,9 @@ export default function CarroContextProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const [filter, setFilter] = useState<Filter>();
+  const [carros, setCarros] = useState<Carro[]>([]);
+
   return (
     <CarroContext.Provider value={{ filter, setFilter, carros, setCarros }}>
       {children}
