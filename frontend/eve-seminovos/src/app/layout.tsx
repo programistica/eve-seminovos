@@ -4,7 +4,7 @@ import Header from "@/components/header/header";
 import { Box, Collapse } from "@mui/material";
 import { Inter } from "next/font/google";
 import Filtros from "@/components/Filtros/filtros";
-import CarFilterContextProvider from "./CarFilterContextProvider";
+import CarFilterContextProvider from "./CarroContextProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 

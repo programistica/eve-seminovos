@@ -1,25 +1,13 @@
 "use client";
 
 import * as React from "react";
+import fetchCarros from "@/services/fetchCarros";
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
-
-interface Carro {
-  id: number;
-  nome: string;
-  marca: string;
-  ano: number;
-  preco: number;
-  img: string;
-}
-
-export async function fetchCarros(): Promise<Carro[]> {
-  const response = await fetch("http://127.0.0.1:5000/carros");
-  const data = (await response.json()) as Carro[];
-  return data;
-}
+import { CarroContext } from "@/app/CarroContextProvider";
 
 export default function Home() {
-  const [carros, setCarros] = React.useState<Carro[]>([]);
+  const { filter, setFilter, carros, setCarros } =
+    React.useContext(CarroContext);
 
   React.useEffect(() => {
     fetchCarros().then((data) => {
