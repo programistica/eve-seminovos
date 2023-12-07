@@ -31,7 +31,7 @@ export default function Home() {
       {carros
         .sort((a, b) => a.preco - b.preco)
         .map((carro) => (
-          <Card sx={{ maxWidth: 345 }}>
+          <Card key={carro.id} sx={{ maxWidth: 345 }}>
             <CardMedia
               component="img"
               height="200"
