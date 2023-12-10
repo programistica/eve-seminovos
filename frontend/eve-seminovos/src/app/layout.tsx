@@ -24,7 +24,12 @@ export default function RootLayout({
         <body className={inter.className}>
           {" "}
           <Box
-            sx={{ display: "flex", flexDirection: "column", marginTop: "10vh" }}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              marginTop: "10vh",
+              overflow: "hidden",
+            }}
           >
             <Header />
             <Box

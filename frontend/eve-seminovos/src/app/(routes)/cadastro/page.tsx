@@ -11,9 +11,13 @@ import {
   ListItemButton,
   Checkbox,
   Divider,
+  Modal,
+  Paper,
 } from "@mui/material";
 import fetchCarros from "@/services/fetchCarros";
 import Lista from "./_components/lista";
+import Formulario from "./_components/formulario";
+import Botoes from "./_components/Botoes.1";
 
 export default function Cadastro() {
   const { filter, setFilter, carros, setCarros } =
@@ -24,7 +28,7 @@ export default function Cadastro() {
       setCarros(data);
     });
   }, []);
-
+  const [novo, setNovo] = React.useState(false);
   return (
     <Box
       sx={{
@@ -39,7 +43,10 @@ export default function Cadastro() {
         padding: "1rem",
       }}
     >
+      <Botoes setNovo={setNovo} />
       <Lista carros={carros} />
+
+      <Formulario aberto={novo} setNovo={setNovo} />
     </Box>
   );
 }

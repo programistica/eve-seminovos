@@ -8,7 +8,12 @@ import {
   ListItemButton,
   Checkbox,
   Divider,
+  Paper,
+  Typography,
+  Box,
+  Button,
 } from "@mui/material";
+import Botoes from "./Botoes.1";
 
 interface Carro {
   id: number;
@@ -21,20 +26,35 @@ interface Carro {
 
 export default function Lista({ carros }: { carros: Carro[] }) {
   return (
-    <List
-      dense
-      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
+    <Paper
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        width: "90%",
+        height: "80%",
+        gap: "1rem",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: "1rem",
+      }}
+      elevation={3}
     >
-      {carros.map((carro) => (
-        <>
-          <ListItem key={carro.id} secondaryAction={<Checkbox edge="end" />}>
-            <ListItemButton>
-              <ListItemText primary={carro.nome} />
-            </ListItemButton>
-          </ListItem>
-          <Divider variant="fullWidth" component="li" />
-        </>
-      ))}
-    </List>
+      <Box></Box>
+      <List dense sx={{ width: "80%", bgcolor: "background.paper" }}>
+        {carros.map((carro) => (
+          <>
+            <ListItem key={carro.id} secondaryAction={<Checkbox edge="end" />}>
+              <ListItemButton>
+                <ListItemText
+                  primary={carro.nome}
+                  secondary={carro.marca}
+                ></ListItemText>
+              </ListItemButton>
+            </ListItem>
+            <Divider variant="fullWidth" component="li" />
+          </>
+        ))}
+      </List>
+    </Paper>
   );
 }
