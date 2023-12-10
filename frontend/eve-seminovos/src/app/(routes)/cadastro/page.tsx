@@ -30,7 +30,8 @@ export default function Cadastro() {
   }, []);
   const [novo, setNovo] = React.useState(false);
   return (
-    <Box
+    <Paper
+      elevation={3}
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -47,6 +48,6 @@ export default function Cadastro() {
       <Lista carros={carros} />
 
       <Formulario aberto={novo} setNovo={setNovo} />
-    </Box>
+    </Paper>
   );
 }

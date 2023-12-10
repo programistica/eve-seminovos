@@ -5,6 +5,9 @@ from flask import Flask
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 
+from .blueprint_auth import blueprint_auth
+from .blueprint_carros import blueprint_carros
+
 app = Flask(__name__)
 CORS(app)
 
@@ -21,4 +24,5 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 
-from app import models, routes
+app.register_blueprint(blueprint_carros, url_prefix="/carros")
+app.register_blueprint(blueprint_auth, url_prefix="/auth")
