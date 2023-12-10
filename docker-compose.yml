@@ -23,7 +23,7 @@ services:
 
   frontend:
     build:
-      context: ./frontend
+      context: ./frontend/eve-seminovos
       dockerfile: ./Dockerfile
     ports:
       - "3000:3000"
