@@ -10,7 +10,7 @@ interface Carro {
 }
 
 export default async function fetchCarros(): Promise<Carro[]> {
-  const response = await fetch("http://localhost:5000/carros");
+  const response = await fetch("http://localhost:5000/carros/todos");
   const data = (await response.json()) as Carro[];
   return data;
 }

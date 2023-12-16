@@ -2,4 +2,4 @@ from flask import Blueprint
 
 blueprint_carros = Blueprint("Blueprint_carros", __name__)
 
-from . import models, routes
+from . import routes

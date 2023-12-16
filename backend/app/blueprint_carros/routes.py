@@ -1,11 +1,11 @@
-from flask import jsonify, request
+from flask import jsonify
 
-from .. import app, db
+from ..blueprint_carros import blueprint_carros
 from .models import Carros
 
 
-@app.route("/carros", methods=["GET"])
-def get_Carros():
+@blueprint_carros.route("/todos", methods=["GET"])
+def get():
     carros = Carros.query.all()
 
     return (

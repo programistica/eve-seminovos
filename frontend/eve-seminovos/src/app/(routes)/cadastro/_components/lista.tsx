@@ -13,7 +13,6 @@ import {
   Box,
   Button,
 } from "@mui/material";
-import Botoes from "./Botoes.1";
 
 interface Carro {
   id: number;

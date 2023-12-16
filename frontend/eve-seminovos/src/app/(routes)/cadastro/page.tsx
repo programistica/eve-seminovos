@@ -17,8 +17,7 @@ import {
 import fetchCarros from "@/services/fetchCarros";
 import Lista from "./_components/lista";
 import Formulario from "./_components/formulario";
-import Botoes from "./_components/Botoes.1";
-
+import Botoes from "./_components/botoes";
 export default function Cadastro() {
   const { filter, setFilter, carros, setCarros } =
     React.useContext(CarroContext);
