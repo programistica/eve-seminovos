@@ -13,3 +13,4 @@ COPY data/* /var/opt/data/
 COPY initial.sql /docker-entrypoint-initdb.d/
 
 RUN chmod +x /docker-entrypoint-initdb.d/initial.sql
+
