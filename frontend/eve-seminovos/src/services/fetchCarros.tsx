@@ -1,16 +1,15 @@
-"use client";
-
-interface Carro {
-  id: number;
-  nome: string;
-  marca: string;
-  ano: number;
-  preco: number;
-  img: string;
-}
+import Carro from "@/app/interfaces/carro";
 
 export default async function fetchCarros(): Promise<Carro[]> {
-  const response = await fetch("http://localhost:5000/carros/todos");
-  const data = (await response.json()) as Carro[];
-  return data;
+  const response = await fetch("http://localhost:5000/carros", {
+    method: "GET",
+  });
+
+  switch (response.status) {
+    case 200:
+      const data = (await response.json()) as Carro[];
+      return data;
+    default:
+      throw new Error("Erro desconhecido");
+  }
 }

@@ -1,12 +1,23 @@
 "use client";
 
 import React from "react";
-import { Paper, Input, Box, Button, Modal } from "@mui/material";
+import {
+  Paper,
+  Input,
+  Box,
+  Button,
+  TextField,
+  Modal,
+  ImageList,
+  ImageListItem,
+} from "@mui/material";
 
 import { styled } from "@mui/material/styles";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import ClickAwayListener from "@mui/material/ClickAwayListener";
+
+const campos = ["nome", "marca", "ano", "preco", "imagem"];
 
 const VisuallyHiddenInput = styled("input")({
   border: 0,
@@ -30,6 +41,22 @@ export default function Formulario({
   const handleClickAway = () => {
     setNovo(false);
   };
+
+  const [images, setImages] = React.useState<File[]>([]);
+
+  const handleUploadList = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const filesArray = Array.from(e.target.files);
+      setImages((prevImages) => [...prevImages, ...filesArray]);
+    }
+  };
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const clearUploadList = () => {
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+  };
+
   return (
     <Modal
       open={aberto}
@@ -50,37 +77,57 @@ export default function Formulario({
             display: "flex",
             flexDirection: "column",
             width: "50%",
-            height: "60%",
 
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <Box>
-            <Input sx={{ margin: "1rem" }} placeholder="Nome" />
-            <Input sx={{ margin: "1rem" }} placeholder="Marca" />
-          </Box>
-          <Box>
-            <Input sx={{ margin: "1rem" }} placeholder="Ano" />
-            <Input sx={{ margin: "1rem" }} placeholder="Preço" />
-          </Box>
-          <Box>
-            <Button
-              component="label"
-              variant="contained"
-              color="primary"
+          {campos.map((campo) => (
+            <TextField
+              id="outlined-basic"
+              label={campo}
+              variant="outlined"
               sx={{ margin: "1rem" }}
-              startIcon={<CloudUploadIcon />}
-            >
-              <VisuallyHiddenInput
-                accept="image/*"
-                id="contained-button-file"
-                multiple
-                type="file"
+              required
+            />
+          ))}
+
+          <Button
+            component="label"
+            variant="contained"
+            color="primary"
+            sx={{ margin: "1rem" }}
+            startIcon={<CloudUploadIcon />}
+          >
+            <VisuallyHiddenInput
+              ref={inputRef}
+              accept="image/*"
+              id="contained-button-file"
+              multiple
+              type="file"
+              onChange={handleUploadList}
+              required
+            />
+            Carregar Imagem
+          </Button>
+          {images.map((item, index) => (
+            <ImageListItem key={index}>
+              <img
+                src={URL.createObjectURL(item)}
+                alt={item.name}
+                loading="lazy"
               />
-              Carregar Imagem
-            </Button>
-          </Box>
+            </ImageListItem>
+          ))}
+
+          <Button
+            variant="contained"
+            color="success"
+            sx={{ margin: "1rem" }}
+            onClick={() => {}}
+          >
+            Criar
+          </Button>
         </Paper>
       </ClickAwayListener>
     </Modal>

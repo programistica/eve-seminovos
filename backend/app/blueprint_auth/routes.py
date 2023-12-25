@@ -1,3 +1,4 @@
+from app import db
 from flask import jsonify, make_response, request
 from flask_jwt_extended import create_access_token
 
@@ -49,3 +50,18 @@ def listar_usuarios():
     usuarios = Usuarios.query.all()
     usuarios = [usuario.to_json() for usuario in usuarios]
     return make_response(jsonify(usuarios), 200)
+
+
+@blueprint_auth.route("/usuarios/criar", methods=["POST"])
+def criar_usuario():
+    body = request.get_json()
+
+    usuario = Usuarios()
+    usuario.usuario = body.get("usuario")
+    usuario.senha = body.get("senha")
+    usuario.admin = body.get("admin")
+
+    db.session.add(usuario)
+    db.session.commit()
+
+    return jsonify({"message": "Usuário criado com sucesso"}), 201

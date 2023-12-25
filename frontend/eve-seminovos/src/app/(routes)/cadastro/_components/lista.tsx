@@ -14,16 +14,19 @@ import {
   Button,
 } from "@mui/material";
 
-interface Carro {
-  id: number;
-  nome: string;
-  marca: string;
-  ano: number;
-  preco: number;
-  img: string;
-}
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import IconButton from "@mui/material/IconButton";
+
+import Carro from "@/app/interfaces/carro";
 
 export default function Lista({ carros }: { carros: Carro[] }) {
+  const handleEditCarro = (id: number) => {
+    console.log(id);
+  };
+  const handleDeleteCarro = (id: number) => {
+    console.log(id);
+  };
   return (
     <Paper
       sx={{
@@ -42,7 +45,27 @@ export default function Lista({ carros }: { carros: Carro[] }) {
       <List dense sx={{ width: "80%", bgcolor: "background.paper" }}>
         {carros.map((carro) => (
           <>
-            <ListItem key={carro.id} secondaryAction={<Checkbox edge="end" />}>
+            <ListItem
+              key={carro.id}
+              secondaryAction={
+                <Box>
+                  <IconButton
+                    onClick={() => handleEditCarro(carro.id)}
+                    edge="end"
+                    aria-label="edit"
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    onClick={() => handleDeleteCarro(carro.id)}
+                    edge="end"
+                    aria-label="delete"
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </Box>
+              }
+            >
               <ListItemButton>
                 <ListItemText
                   primary={carro.nome}

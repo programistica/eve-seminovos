@@ -1,10 +1,13 @@
 from flask import jsonify
+from flask_sqlalchemy import SQLAlchemy
 
 from ..blueprint_carros import blueprint_carros
-from .models import Carros
+from .models import Carro
+
+db = SQLAlchemy()
 
 
-@blueprint_carros.route("/todos", methods=["GET"])
+@blueprint_carros.route("/", methods=["GET"])
 def get():
     carros = Carros.query.all()
 
