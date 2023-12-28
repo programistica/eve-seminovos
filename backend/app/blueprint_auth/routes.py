@@ -1,9 +1,15 @@
 from app import db
 from flask import jsonify, make_response, request
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import (
+    JWTManager,
+    create_access_token,
+    jwt_required,
+    set_access_cookies,
+    unset_jwt_cookies,
+)
 
 from ..blueprint_auth import blueprint_auth
-from .models import Usuarios
+from .views import *
 
 
 @blueprint_auth.route("/login", methods=["POST"])
@@ -21,18 +27,18 @@ def login():
         refresh_token = create_access_token(identity=usuario.id, fresh=True)
         response = make_response(jsonify(logged_in_as=usuario.id), 200)
         response.set_cookie("access_token_cookie", access_token, httponly=True)
-        set_refresh_token_cookie(response, refresh_token)
+        set_access_cookies(response, refresh_token)
 
         return response
 
 
 @blueprint_auth.route("/login/refresh", methods=["POST"])
-@jwt_refresh_token_required
+@jwt_required()
 def refresh():
     current_user = get_jwt_identity()
-    access_token = create_access_token(identity=current_user)
+    access_token = create_access_token(identity=current_user, fresh=True)
     response = jsonify(access_token=access_token)
-    set_access_token_cookie(response, access_token)
+    set_access_cookies(response, access_token)
     return response
 
 
@@ -45,23 +51,10 @@ def logout():
 
 
 @blueprint_auth.route("/usuarios", methods=["GET"])
-@jwt_required()
 def listar_usuarios():
-    usuarios = Usuarios.query.all()
-    usuarios = [usuario.to_json() for usuario in usuarios]
-    return make_response(jsonify(usuarios), 200)
+    return get_usuarios_view()
 
 
 @blueprint_auth.route("/usuarios/criar", methods=["POST"])
 def criar_usuario():
-    body = request.get_json()
-
-    usuario = Usuarios()
-    usuario.usuario = body.get("usuario")
-    usuario.senha = body.get("senha")
-    usuario.admin = body.get("admin")
-
-    db.session.add(usuario)
-    db.session.commit()
-
-    return jsonify({"message": "Usuário criado com sucesso"}), 201
+    return add_usuario_view()
