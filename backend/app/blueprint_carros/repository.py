@@ -1,6 +1,7 @@
 from app import db
 
 from .models import Carros, CarrosImages
+from .schema import CarrosImagesSchema
 
 
 class CarroRepository:
@@ -9,18 +10,20 @@ class CarroRepository:
     marca: str
     ano: int
     preco: float
+    carros_images: list[CarrosImages]
 
     @staticmethod
-    def add_carro(carro: Carros) -> None:
+    def create_carro(carro: Carros) -> None:
         db.session.add(carro)
         db.session.commit()
+        db.session.refresh(carro)
 
     @staticmethod
-    def get_carros() -> list[Carros]:
+    def find_carros() -> list[Carros]:
         return Carros.query.all()
 
     @staticmethod
-    def get_carro_by_id(id: int) -> Carros:
+    def find_carro_by_id(id: int) -> Carros:
         return Carros.query.filter_by(id=id).first()
 
     @staticmethod
@@ -31,20 +34,32 @@ class CarroRepository:
                 "marca": carro.marca,
                 "ano": carro.ano,
                 "preco": carro.preco,
+                "carros_images": carro.carros_images,
             }
         )
         db.session.commit()
+        db.session.refresh(carro)
 
     @staticmethod
     def delete_carro(carro_id: int) -> None:
+        carro = Carros()
         Carros.query.filter_by(id=carro_id).delete()
+        db.session.commit()
+        db.session.refresh(carro)
+
+
+class CarrosImagesRepository:
+    @staticmethod
+    def create_image(images: CarrosImages) -> None:
+        db.session.add(images)
         db.session.commit()
 
     @staticmethod
-    def create_carro_images(carro_images: list[dict]) -> None:
-        for image in carro_images:
-            carro_image = CarrosImages(
-                carro_id=image.get("carro_id"), image=image.get("image")
-            )
-            db.session.add(carro_image)
+    def find_images_by_carro_id(carro_id: int) -> list[CarrosImages]:
+        return CarrosImages.query.filter_by(carro_id=carro_id).all()
+
+    @staticmethod
+    def delete_image(image: CarrosImages) -> None:
+        db.session.delete(image)
         db.session.commit()
+        db.session.refresh(image)

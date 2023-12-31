@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from flask import Flask
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -29,16 +30,18 @@ def create_app():
 
     db.init_app(app)
 
-    from .blueprint_auth.models import Usuarios
     from .blueprint_carros.models import Carros, CarrosImages
+    from .blueprint_usuarios.models import Usuarios
 
     with app.app_context():
         db.create_all()
 
-    from .blueprint_auth import blueprint_auth
+    migrate = Migrate(app, db)
+
     from .blueprint_carros import blueprint_carros
+    from .blueprint_usuarios import blueprint_usuarios
 
     app.register_blueprint(blueprint_carros, url_prefix="/carros")
-    app.register_blueprint(blueprint_auth, url_prefix="/auth")
+    app.register_blueprint(blueprint_usuarios, url_prefix="/usuarios")
 
     return app

@@ -14,3 +14,7 @@ class Usuarios(db.Model):
         self.usuario = usuario
         self.senha = senha
         self.admin = admin
+
+
+# Path: backend/app/blueprint_usuarios/models.py
+# Compare this snippet from backend/app/blueprint_usuario/schema.py:

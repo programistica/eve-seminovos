@@ -1,6 +1,6 @@
 import Carro from "@/app/interfaces/carro";
 
-export default async function fetchCarros(): Promise<Carro[]> {
+export default async function FetchCarros(): Promise<Carro[]> {
   const response = await fetch("http://localhost:5000/carros", {
     method: "GET",
   });

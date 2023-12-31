@@ -1,2 +1,29 @@
-.env.local
-/__pycache__
+
+# IDE
+.vscode
+
+# Python
+*.pyc
+*__pycache__/*
+*.py[cod]
+*$py.class
+
+
+# Environments
+.env
+.venv
+env/
+venv/
+
+
+# folders
+*assets*
+
+
+
+
+
+
+
+
+

@@ -18,6 +18,10 @@ class UsuarioRepository:
         return Usuarios.query.filter_by(id=id).first()
 
     @staticmethod
+    def get_usuario_by_usuario(usuario: str) -> Usuarios:
+        return Usuarios.query.filter_by(usuario=usuario).first()
+
+    @staticmethod
     def update_usuario(usuario: Usuarios) -> None:
         Usuarios.query.filter_by(id=usuario.id).update(
             {

@@ -1,53 +1,114 @@
 from app import db
-from flask import jsonify, make_response
+from app.utils import upload_image
+from flask import jsonify, make_response, request
 
-from .models import Carros, CarrosImages
-from .repository import CarroRepository
+from .repository import CarroRepository, CarrosImagesRepository
+from .schema import CarrosImagesSchema, CarrosSchema
 
 
-def get_view() -> tuple[dict, int]:
+def find_carros_view() -> tuple[dict, int]:
     try:
-        return make_response(jsonify(CarroRepository.get_carros()), 200)
+        carros_schema = CarrosSchema(many=True)
+        carros_data = carros_schema.dump(CarroRepository.find_carros())
+        if not carros_data:
+            return make_response(jsonify({"message": "Nenhum carro encontrado"}), 404)
+        return make_response(jsonify(carros_data), 200)
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 500)
 
 
-def get_by_id_view(id: int) -> tuple[dict, int]:
+def find_carros_by_id_view(id: int) -> tuple[dict, int]:
     try:
-        return make_response(jsonify(CarroRepository.get_carro_by_id(id)), 200)
+        carros_schema = CarrosSchema()
+        carros_data = carros_schema.dump(CarroRepository.find_carro_by_id(id))
+        if not carros_data:
+            return make_response(jsonify({"message": "Carro nao encontrado"}), 404)
+        return make_response(jsonify(carros_data), 200)
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 500)
 
 
-def create_view(carro: Carros, carro_image: CarrosImages) -> tuple[dict, int]:
+def create_carro_view() -> tuple[dict, int]:
     try:
-        CarroRepository.add_carro(carro)
-        CarroRepository.add_carro_image(carro_image)
-        return make_response(jsonify({"message": "Carro criado com sucesso"}), 200)
+        data_json = request.form.to_dict()
+        data_files = request.files.getlist("images")
+        print(data_files)
+        carros_schema = CarrosSchema()
+        carros_data = carros_schema.load(
+            data_json,
+            session=db.session,
+        )
+        try:
+            CarroRepository.create_carro(carros_data)
+
+        except Exception as e:
+            return make_response(jsonify({"error": str(e)}), 500)
+
+        images = []
+        for image in data_files:
+            image_path = upload_image(carros_data.id, image)
+            images_data = {"carro_id": carros_data.id, "image": image_path}
+            images.append(images_data)
+
+        for image_instance in images:
+            carros_images_schema = CarrosImagesSchema()
+            carros_images_data = carros_images_schema.load(
+                image_instance,
+                session=db.session,
+            )
+            try:
+                CarrosImagesRepository.create_image(carros_images_data)
+            except Exception as e:
+                return make_response(jsonify({"error": str(e)}), 500)
+
+    except Exception as e:
+        return make_response(jsonify({"error": str(e)}), 500)
+    carro = CarroRepository.find_carro_by_id(carros_data.id)
+    return make_response(
+        jsonify(
+            {"message": "Carro criado com sucesso", "carro": carros_schema.dump(carro)}
+        ),
+        200,
+    )
+
+
+def delete_carro_view(id: int) -> tuple[dict, int]:
+    carros_schema = CarrosSchema()
+    carros_data = carros_schema.delete(
+        CarroRepository.find_carro_by_id(id), session=db.session
+    )
+    if not carros_data:
+        return make_response(jsonify({"message": "Carro nao encontrado"}), 404)
+    else:
+        try:
+            CarroRepository.delete_carro(carros_data)
+            return make_response(
+                jsonify({"message": "Carro deletado com sucesso"}), 200
+            )
+        except Exception as e:
+            return make_response(jsonify({"error": str(e)}), 500)
+
+
+def update_carro_view() -> tuple[dict, int]:
+    try:
+        data = request.get_json()
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 500)
 
-
-def delete() -> tuple[dict, int]:
-    carro_id = request.view_args["id"]
-    try:
-        CarroRepository.delete_carro(carro_id)
-        return make_response(jsonify({"message": "Carro deletado com sucesso"}), 200)
-    except Exception as e:
-        return make_response(jsonify({"error": str(e)}), 500)
-
-
-def update(carro: Carros) -> tuple[dict, int]:
-    try:
-        CarroRepository.update_carro(carro)
-        return make_response(jsonify({"message": "Carro atualizado com sucesso"}), 200)
-    except Exception as e:
-        return make_response(jsonify({"error": str(e)}), 500)
+    carros_schema = CarrosSchema()
+    carros_data = carros_schema.load(data, session=db.session)
+    carro = CarroRepository.find_carro_by_id(carros_data.id)
+    if not carro:
+        return make_response(jsonify({"message": "Carro nao encontrado"}), 404)
+    else:
+        try:
+            CarroRepository.update_carro(carros_data)
+            return make_response(
+                jsonify({"message": "Carro atualizado com sucesso"}), 200
+            )
+        except Exception as e:
+            return make_response(jsonify({"error": str(e)}), 500)
 
 
-def create_carro_images(carro_images: list[dict]) -> tuple[dict, int]:
-    try:
-        CarroRepository.create_carro_images(carro_images)
-        return jsonify({"message": "Imagens do carro criadas com sucesso"}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+# Path: backend/app/blueprint_usuarios/views.py
+# Compare this snippet from backend/app/blueprint_usuarios/repository.py:
