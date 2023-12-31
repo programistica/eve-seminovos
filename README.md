@@ -39,3 +39,31 @@ Inicie o servidor
   docker-compose up
 ```
 
+
+
+
+## Documentação da API
+
+#### Cria usuario
+
+```http
+  POST /usuario/create
+```
+
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `usuario` | `string` | **Obrigatório**.|
+| `senha`| `string` | **Obrigatório**.
+
+#### Retorna um usuario
+
+```http
+  GET /usuario/${usuario}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `usuario`      | `string` | **Obrigatório**. O usuario que deseja saber se ja existe |
+
+
+
