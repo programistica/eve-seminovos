@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import fetchCarros from "@/services/fetchCarros";
+import fetchCarros from "@/services/carros/fetchCarros";
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import { CarroContext } from "@/app/CarroContextProvider";
 

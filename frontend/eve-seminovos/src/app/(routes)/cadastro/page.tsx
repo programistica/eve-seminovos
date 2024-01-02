@@ -14,7 +14,7 @@ import {
   Modal,
   Paper,
 } from "@mui/material";
-import fetchCarros from "@/services/fetchCarros";
+import fetchCarros from "@/services/carros/fetchCarros";
 import Lista from "./_components/lista";
 import Formulario from "./_components/formulario";
 import Botoes from "./_components/botoes";

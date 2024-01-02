@@ -10,8 +10,7 @@
 
 
 # Environments
-.env
-.venv
+.env.local
 env/
 venv/
 

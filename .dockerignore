@@ -1,2 +1,6 @@
-.env.local
-.gitignore
+**/.env.local',
+    '**/.env.production',
+    '**/.env.development',
+    '**/.env.test',
+
+ 
