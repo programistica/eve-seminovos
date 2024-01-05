@@ -12,9 +12,12 @@ import {
   IconButton,
 } from "@mui/material";
 import { Close as CloseIcon } from "@mui/icons-material";
+import Cadastrar from "./cadastrar";
 export default function LoginMenu() {
   const [open, setOpen] = React.useState(false);
   const handleClick = () => setOpen(!open);
+  const [cadastrar, setCadastrar] = React.useState(false);
+  const handleCadastrar = () => setCadastrar(!cadastrar);
 
   return (
     <Box>
@@ -58,64 +61,91 @@ export default function LoginMenu() {
                 <CloseIcon />
               </IconButton>
             </Box>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <TextField
-                id="outlined-basic"
-                label="Usuario"
-                variant="outlined"
-                margin="normal"
-                type="text"
-              >
-                Usuario
-              </TextField>
-              <TextField
-                id="outlined-basic"
-                label="Senha"
-                variant="outlined"
-                margin="normal"
-                type="password"
-              >
-                Senha
-              </TextField>
-              <Link
-                sx={{ mt: 1 }}
-                component="button"
-                variant="body2"
-                onClick={() => {
-                  console.info("I'm a button.");
-                }}
-              >
-                Esqueceu a senha?
-              </Link>
+            {cadastrar ? (
+              <Cadastrar />
+            ) : (
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                <Button
-                  sx={{
-                    mt: 1,
+                <TextField
+                  id="outlined-basic"
+                  label="Usuario"
+                  variant="outlined"
+                  margin="normal"
+                  type="text"
+                >
+                  Usuario
+                </TextField>
+                <TextField
+                  id="outlined-basic"
+                  label="Senha"
+                  variant="outlined"
+                  margin="normal"
+                  type="password"
+                >
+                  Senha
+                </TextField>
+                <Link
+                  sx={{ mt: 1 }}
+                  component="button"
+                  variant="body2"
+                  onClick={() => {
+                    console.info("I'm a button.");
                   }}
                 >
-                  Login
-                </Button>
-                <Button
-                  sx={{
-                    mt: 1,
-                  }}
-                >
-                  Cadastrar
-                </Button>
+                  Esqueceu a senha?
+                </Link>
               </Box>
+            )}
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              {cadastrar ? (
+                <>
+                  <Button
+                    onClick={handleCadastrar}
+                    sx={{
+                      mt: 1,
+                    }}
+                  >
+                    Voltar
+                  </Button>
+                  <Button
+                    sx={{
+                      mt: 1,
+                    }}
+                  >
+                    Enviar
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    sx={{
+                      mt: 1,
+                    }}
+                  >
+                    Login
+                  </Button>
+                  <Button
+                    onClick={handleCadastrar}
+                    sx={{
+                      mt: 1,
+                    }}
+                  >
+                    Cadastrar
+                  </Button>
+                </>
+              )}
             </Box>
           </Paper>
         </ClickAwayListener>
