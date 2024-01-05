@@ -9,8 +9,9 @@ import {
   Link,
   Paper,
   ClickAwayListener,
+  IconButton,
 } from "@mui/material";
-
+import { Close as CloseIcon } from "@mui/icons-material";
 export default function LoginMenu() {
   const [open, setOpen] = React.useState(false);
   const handleClick = () => setOpen(!open);
@@ -32,71 +33,92 @@ export default function LoginMenu() {
         }}
         open={open}
       >
-        <Paper
-          elevation={3}
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-
-            bgcolor: "background.paper",
-            borderRadius: "10px",
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          <TextField
-            id="outlined-basic"
-            label="Usuario"
-            variant="outlined"
-            margin="normal"
-            type="text"
-          >
-            Usuario
-          </TextField>
-          <TextField
-            id="outlined-basic"
-            label="Senha"
-            variant="outlined"
-            margin="normal"
-            type="password"
-          >
-            Senha
-          </TextField>
-          <Link
-            sx={{ mt: 1 }}
-            component="button"
-            variant="body2"
-            onClick={() => {
-              console.info("I'm a button.");
-            }}
-          >
-            Esqueceu a senha?
-          </Link>
-          <Box
+        <ClickAwayListener onClickAway={handleClick}>
+          <Paper
+            elevation={3}
             sx={{
               display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              bgcolor: "background.paper",
+              borderRadius: "10px",
+              boxShadow: 24,
+              p: 4,
             }}
           >
-            <Button
+            <Box
               sx={{
-                mt: 1,
+                display: "flex",
+                flexDirection: "row-reverse",
+                width: "100%",
               }}
             >
-              Login
-            </Button>
-            <Button
+              <IconButton onClick={handleClick}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+            <Box
               sx={{
-                mt: 1,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              Cadastrar
-            </Button>
-          </Box>
-        </Paper>
+              <TextField
+                id="outlined-basic"
+                label="Usuario"
+                variant="outlined"
+                margin="normal"
+                type="text"
+              >
+                Usuario
+              </TextField>
+              <TextField
+                id="outlined-basic"
+                label="Senha"
+                variant="outlined"
+                margin="normal"
+                type="password"
+              >
+                Senha
+              </TextField>
+              <Link
+                sx={{ mt: 1 }}
+                component="button"
+                variant="body2"
+                onClick={() => {
+                  console.info("I'm a button.");
+                }}
+              >
+                Esqueceu a senha?
+              </Link>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Button
+                  sx={{
+                    mt: 1,
+                  }}
+                >
+                  Login
+                </Button>
+                <Button
+                  sx={{
+                    mt: 1,
+                  }}
+                >
+                  Cadastrar
+                </Button>
+              </Box>
+            </Box>
+          </Paper>
+        </ClickAwayListener>
       </Modal>
     </Box>
   );

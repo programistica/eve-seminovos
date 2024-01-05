@@ -1,10 +1,19 @@
 "use client";
 import React from "react";
-import { AppBar, Toolbar, Typography, Button } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  ClickAwayListener,
+} from "@mui/material";
 import { Login } from "@mui/icons-material";
 import LoginMenu from "./login";
 
 export default function Header() {
+  const [open, setOpen] = React.useState(false);
+  const handleClick = () => setOpen(!open);
+
   return (
     <AppBar
       position="fixed"
@@ -17,6 +26,7 @@ export default function Header() {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           Eve Seminovos
         </Typography>
+
         <LoginMenu />
       </Toolbar>
     </AppBar>
