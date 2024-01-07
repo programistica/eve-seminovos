@@ -18,5 +18,5 @@ RUN apt-get upgrade && apt-get update
 
 RUN apt-get install vim -y
 
-CMD ["python3", "run.py"]
+RUN chmod +x wait-postgres.sh
 

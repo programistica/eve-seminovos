@@ -25,6 +25,7 @@ class UsuarioRepository:
     def update_usuario(usuario: Usuarios) -> None:
         Usuarios.query.filter_by(id=usuario.id).update(
             {
+                "nome": usuario.nome,
                 "usuario": usuario.usuario,
                 "senha": usuario.senha,
                 "admin": usuario.admin,

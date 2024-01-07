@@ -10,4 +10,4 @@ class UsuariosSchema(SQLAlchemyAutoSchema):
         load_instance = True
         include_relationships = True
         include_fk = True
-        fields = ("id", "usuario", "senha", "admin")
+        fields = ("id", "nome", "usuario", "senha", "admin")
