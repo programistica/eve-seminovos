@@ -2,18 +2,7 @@
 
 import React from "react";
 import { CarroContext } from "@/app/CarroContextProvider";
-import {
-  Box,
-  List,
-  ListItem,
-  ListItemText,
-  TextField,
-  ListItemButton,
-  Checkbox,
-  Divider,
-  Modal,
-  Paper,
-} from "@mui/material";
+import { Paper } from "@mui/material";
 import fetchCarros from "@/services/carros/fetchCarros";
 import Lista from "./_components/lista";
 import Formulario from "./_components/formulario";

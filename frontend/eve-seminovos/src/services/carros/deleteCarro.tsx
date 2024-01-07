@@ -1,6 +1,6 @@
 "use client";
 
-import DeleteCarro from "@/app/interfaces/deleteCarro";
+import DeleteCarro from "@/interfaces/carros/deleteCarro";
 
 export default async function deleteCarro(id: number): Promise<DeleteCarro> {
   const response = await fetch(`http://localhost:5000/carros/delete/${id}`, {

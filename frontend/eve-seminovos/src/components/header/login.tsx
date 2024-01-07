@@ -19,6 +19,18 @@ export default function LoginMenu() {
   const [cadastrar, setCadastrar] = React.useState(false);
   const handleCadastrar = () => setCadastrar(!cadastrar);
 
+  const [newUsuario, setNewUsuario] = React.useState({
+    nome: "",
+    usuario: "",
+    senha: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewUsuario({ ...newUsuario, [name]: value });
+    console.log(newUsuario);
+  };
+
   return (
     <Box>
       {
@@ -62,7 +74,12 @@ export default function LoginMenu() {
               </IconButton>
             </Box>
             {cadastrar ? (
-              <Cadastrar />
+              <Cadastrar
+                onChange={handleChange}
+                nome={newUsuario.nome}
+                usuario={newUsuario.usuario}
+                senha={newUsuario.senha}
+              />
             ) : (
               <Box
                 sx={{

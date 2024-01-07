@@ -18,7 +18,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
 
-import Carro from "@/app/interfaces/carro";
+import Carro from "@/interfaces/carros/carro";
 
 export default function Lista({ carros }: { carros: Carro[] }) {
   const handleEditCarro = (id: number) => {

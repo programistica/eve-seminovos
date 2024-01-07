@@ -82,8 +82,9 @@ export default function Formulario({
             alignItems: "center",
           }}
         >
-          {campos.map((campo) => (
+          {campos.map((campo, index) => (
             <TextField
+              key={index}
               id="outlined-basic"
               label={campo}
               variant="outlined"
@@ -113,6 +114,7 @@ export default function Formulario({
           {images.map((item, index) => (
             <ImageListItem key={index}>
               <img
+                key={item.name}
                 src={URL.createObjectURL(item)}
                 alt={item.name}
                 loading="lazy"
@@ -121,6 +123,7 @@ export default function Formulario({
           ))}
 
           <Button
+            type="submit"
             variant="contained"
             color="success"
             sx={{ margin: "1rem" }}

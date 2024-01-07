@@ -1,4 +1,4 @@
-import CreateCarro from "@/app/interfaces/createCarro";
+import CreateCarro from "@/interfaces/carros/createCarro";
 
 export default async function CreateCarro(
   createCarro: CreateCarro

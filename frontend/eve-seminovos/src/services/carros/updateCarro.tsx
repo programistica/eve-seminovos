@@ -1,4 +1,4 @@
-import UpdateCarro from "@/app/interfaces/updateCarro";
+import UpdateCarro from "@/interfaces/carros/updateCarro";
 
 export default async function UpdateCarros(
   updateCarro: UpdateCarro

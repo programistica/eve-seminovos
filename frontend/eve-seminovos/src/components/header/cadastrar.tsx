@@ -3,7 +3,17 @@
 import React from "react";
 import { TextField, Modal, Button, Box, Link } from "@mui/material";
 
-export default function Cadastrar() {
+export default function Cadastrar({
+  onChange,
+  nome,
+  usuario,
+  senha,
+}: {
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  nome: string;
+  usuario: string;
+  senha: string;
+}) {
   return (
     <Box
       sx={{
@@ -14,33 +24,42 @@ export default function Cadastrar() {
       }}
     >
       <TextField
+        name="nome"
+        value={nome}
+        id="outlined-basic"
+        label="Nome"
+        variant="outlined"
+        margin="normal"
+        type="text"
+        onChange={onChange}
+      >
+        Nome
+      </TextField>
+      <TextField
+        name="usuario"
+        value={usuario}
         id="outlined-basic"
         label="Usuario"
         variant="outlined"
         margin="normal"
         type="text"
+        onChange={onChange}
       >
         Usuario
       </TextField>
       <TextField
+        name="senha"
+        value={senha}
         id="outlined-basic"
         label="Senha"
         variant="outlined"
         margin="normal"
         type="password"
+        onChange={onChange}
       >
         Senha
       </TextField>
-      <Link
-        sx={{ mt: 1 }}
-        component="button"
-        variant="body2"
-        onClick={() => {
-          console.info("I'm a button.");
-        }}
-      >
-        Esqueceu a senha?
-      </Link>
+
       <Box
         sx={{
           display: "flex",

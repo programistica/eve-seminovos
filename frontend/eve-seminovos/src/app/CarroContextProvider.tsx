@@ -2,14 +2,7 @@
 
 import React, { useState, createContext } from "react";
 
-interface Carro {
-  id: number;
-  nome: string;
-  marca: string;
-  ano: number;
-  preco: number;
-  img: string;
-}
+import Carro from "@/interfaces/carros/carro";
 
 interface Filter {
   marca: string[];
